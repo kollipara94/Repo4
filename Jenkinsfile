@@ -9,27 +9,36 @@ pipeline {
     stages {
         stage('Compile') {
             steps {
-                
+                script{
+                    echo "COMPILING"
+                    sh "mvn compile"
 
-          
-                echo "COMPILING"
-
-               
-            }
-
-            
+                } 
+            } 
         }
         stage('Test') {
             steps {
+                script{
+
+                    echo "RUNNING THE TC"
+                    sh "mvn test"
+
+                }
                 
-
-          
-                echo "RUNNING THE TC"
-
                
-            }
+            }  
+        }
+        stage('Package') {
+            steps {
+                script{
 
-            
+                    echo "Creating the package"
+                    sh "mvn package"
+
+                }
+                
+               
+            }  
         }
     }
 }
