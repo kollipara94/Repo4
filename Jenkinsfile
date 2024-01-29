@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent none
 
     tools {
         // Install the Maven version configured as "M3" and add it to the path.
@@ -8,6 +8,8 @@ pipeline {
 
     stages {
         stage('Compile') {
+            agent {label "linux_slave"}
+            }
             steps {
                 script{
                     echo "COMPILING"
@@ -17,6 +19,7 @@ pipeline {
             } 
         }
         stage('test') {
+            agent any
             steps {
                 script{
 
@@ -33,6 +36,7 @@ pipeline {
         }
         }
         stage('Package') {
+            agent any
             steps {
                 script{
 
