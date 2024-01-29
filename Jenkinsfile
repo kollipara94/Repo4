@@ -40,7 +40,7 @@ pipeline {
                 script{
                     sshagent(['aws-key']) {
                     sh "scp -o StrictHostKeyChecking=no server-script.sh ec2-user@172.31.19.85:/home/ec2-user"
-                    sh "ssh ec2-user@172.31.19.85 'bash server-script.sh'"
+                    sh "ssh -o StrictHostKeyChecking=no ec2-user@172.31.19.85 'bash server-script.sh'"
                     echo "Creating the package"
                     sh "mvn package"
 
@@ -48,5 +48,6 @@ pipeline {
                 }  
         }
     }
+}
 }
 
