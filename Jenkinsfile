@@ -8,7 +8,9 @@ pipeline {
 
     stages {
         stage('Compile') {
-            agent {label "linux_slave"}
+            agent {
+                label "linux_slave"
+            }
             }
             steps {
                 script{
@@ -44,9 +46,8 @@ pipeline {
                     sh "mvn package"
 
                 }
-                
-
             }  
         }
     }
+}
 
