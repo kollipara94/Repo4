@@ -8,11 +8,7 @@ pipeline {
 
     stages {
         stage('Compile') {
-            agent {
-                label "linux_slave"
-        
-            }
-        }
+            agent {label "linux_slave"}
             steps {
                 script{
                     echo "COMPILING"
@@ -28,9 +24,9 @@ pipeline {
 
                     echo "RUNNING THE TC"
                     sh "mvn test"
-
+                } 
                 }
-            }  
+             
         
         post{
             always{
@@ -50,5 +46,5 @@ pipeline {
             }  
         }
     }
-
+}
 
