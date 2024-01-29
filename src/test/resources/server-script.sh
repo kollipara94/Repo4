@@ -7,12 +7,10 @@ sudo yum install maven -y
 if [-d "addressbook"]
 then
 echo "repo is already cloned and exists"
-cd /home/ec2-user/addressbook
 git checkout test
 git pull origin test
 else
    git clone https://github.com/kollipara94/Repo4.git
    git checkout test
 fi
-cd addressbook
 mvn package
