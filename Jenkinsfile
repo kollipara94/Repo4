@@ -38,7 +38,7 @@ pipeline {
             }
         }
         }
-        stage('Containarise-Build docker image') {
+        stage('build') {
             agent any
             steps {
                 script{
