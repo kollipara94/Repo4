@@ -38,11 +38,11 @@ pipeline {
             }
         }
         }
-        stage('containerasize docker-hub') {
+        stage('containerasize Build-docker image') {
             agent any
             steps {
                 script{
-                    sshagent(['aws-key']) {
+                    sshagent(['slave2']) {
                     withCredentials([usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
                     sh "scp -o StrictHostKeyChecking=no server-script.sh ${BUILD_SERVER}:/home/ec2-user"
                     sh "ssh -o StrictHostKeyChecking=no ${BUILD_SERVER} 'bash server-script.sh ${IMAGE_NAME} ${BUILD_NUMBER}'"
