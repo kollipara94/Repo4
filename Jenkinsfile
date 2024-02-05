@@ -7,7 +7,7 @@ pipeline {
     }
     environment{
         BUILD_SERVER='ec2-user@172.31.44.24'
-        IMAGE_NAME='dattasai94/java-mvn-privaterepos'
+        IMAGE_NAME='dattasai94/java-mvn-privaterepos:v1'
     }
     stages {
         stage('Compile') {
