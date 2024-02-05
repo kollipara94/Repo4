@@ -5,10 +5,14 @@ pipeline {
         // Install the Maven version configured as "M3" and add it to the path.
         maven "mymaven"
     }
-
+    environment{
+        BUILD_SERVER='ec2-user@172.31.44.24'
+        IMAGE_NAME='dattasai94/java-mvn-privaterepos'
+    }
     stages {
         stage('Compile') {
-            agent {label "linux_slave"}
+        // agent {label "linux_slave"}
+        agent any
             steps {
                 script{
                     echo "COMPILING"
@@ -34,16 +38,20 @@ pipeline {
             }
         }
         }
-        stage('Package') {
+        stage('Containarise-Build docker image') {
             agent any
             steps {
                 script{
-                    sshagent(['aws-key']) {
-                    sh "scp -o StrictHostKeyChecking=no server-script.sh ec2-user@172.31.19.85:/home/ec2-user"
-                    sh "ssh -o StrictHostKeyChecking=no ec2-user@172.31.19.85 'bash server-script.sh'"
+                    sshagent(['slave2']) {
+                    withCredentials([usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
+                    sh "scp -o StrictHostKeyChecking=no server-script.sh ${BUILD_SERVER}:/home/ec2-user"
+                    sh "ssh -o StrictHostKeyChecking=no ${BUILD_SERVER} 'bash server-script.sh ${IMAGE_NAME} ${BUILD_NUMBER}'"
+                    sh "ssh ${BUILD_SERVER} sudo docker login -u ${USERNAME} -P ${PASSWORD}"
+                    sh "ssh ${BUILD_SERVER} sudo docker push ${IMAGE_NAME}:${BUILD_NUMBER}"
                     echo "Creating the package"
                     sh "mvn package"
 
+                }
                 }
                 }  
         }
