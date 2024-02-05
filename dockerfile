@@ -7,7 +7,7 @@ WORKDIR /Repo4
 COPY pom.xml ./
 
 # Download the dependencies needed for the build (cached them in a seperate layer)
-RUN mvn dependency:go-offline
+#RUN mvn dependency:go-offline
 
 # Copy the application source code
 COPY src ./src
