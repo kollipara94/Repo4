@@ -7,7 +7,7 @@ pipeline {
     }
     environment{
         BUILD_SERVER='ec2-user@172.31.44.24'
-        IMAGE_NAME='dattasai94/java-mvn-privaterepos:v1'
+        IMAGE_NAME='dattasai94/java-mvn-privaterepos'
     }
     stages {
         stage('Compile') {
@@ -38,7 +38,7 @@ pipeline {
             }
         }
         }
-        stage('build') {
+        stage('containerasize docker-hub') {
             agent any
             steps {
                 script{
